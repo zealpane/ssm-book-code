@@ -1,4 +1,4 @@
-package com.gdatacloud.zz.ssm.mybatis;
+package mini.mybatis;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

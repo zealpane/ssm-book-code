@@ -1,4 +1,4 @@
-package com.gdatacloud.zz.ssm.mybatis;
+package mini.mybatis;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.mybatis.first.Dom4jTest;
 
 import lombok.extern.slf4j.Slf4j;
 

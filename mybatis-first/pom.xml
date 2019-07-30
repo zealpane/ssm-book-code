@@ -24,12 +24,7 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<version>1.6.1</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -59,4 +54,21 @@
 			<version>1.2.3</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<!-- 因为在后面的步骤中，会在dao包下创建xml文件，如果未加入上面的内容，maven是不会将xml文件发布到编译后的classes目录下，这样就导致mybatis找不到该配置文件 -->
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+			<!-- 这里我们把src/main/resources也加入资源查找的目录 -->
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+	</build>
+
 </project>

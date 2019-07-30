@@ -38,5 +38,18 @@
 			<version>1.2.3</version>
 		</dependency>
 	</dependencies>
+	<modules>
+		<module>lombok-demo</module>
+		<module>mini-mybatis</module>
+		<module>mybatis-first</module>
+		<module>ref-proxy</module>
+		<module>servlet-demo</module>
+		<module>spring</module>
+		<module>springboot-first</module>
   
+	<module>exam-demo</module>
+  <module>mini-springboot</module>
+    
+  <module>xml-java-demo</module>
+  </modules>
 </project>
