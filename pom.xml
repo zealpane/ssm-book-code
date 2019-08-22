@@ -51,5 +51,6 @@
   <module>mini-springboot</module>
     
   <module>xml-java-demo</module>
+    <!-- <module>elasticsearch-demo</module> -->
   </modules>
 </project>

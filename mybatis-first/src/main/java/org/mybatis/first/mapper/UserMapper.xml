@@ -3,8 +3,115 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.mybatis.first.mapper.UserMapper">
+
+	<!-- 插入 -->
+	<insert id="insertUser">
+		INSERT INTO `mybatis-demo`.`g_ac_user` ( `id`, `email`, `password`, `name` )
+		VALUES
+		( 1, 'zealpane@163.com', '123', '作者' );
+	</insert>
+
+	<insert id="insertUser2" parameterType="org.mybatis.first.entity.User">
+		INSERT INTO `mybatis-demo`.`g_ac_user` (`email`, `password`, `name` )
+		VALUES
+		( #{email}, #{password}, #{name} );
+	</insert>
+	
+	<insert id="insertUserWithParam">
+		INSERT INTO `mybatis-demo`.`g_ac_user` (`email`, `password`, `name` )
+		VALUES
+		( #{user.email}, #{user.password}, #{user.name} );
+	</insert>
+	
+	<delete id="deleteUserById">
+	    DELETE FROM g_ac_user WHERE id=#{id}
+	 </delete>
+	 
+	<update id="updateUserById">
+	   UPDATE `mybatis-demo`.`g_ac_user` 
+		SET `email` = 'zealpane@163.com',
+		`password` = '123',
+		`name` = '作者' 
+		WHERE
+			`id` = 1;
+	</update>
+
 	<select id="selectUserById"
 		resultType="org.mybatis.first.entity.User">
 		select * from g_ac_user where id = #{id}
+	</select>
+
+	<!-- 查询用户列表实例1：if不在where内 -->
+	<select id="getList">
+		select * from g_ac_user where 1=1
+		<if test="name != null and name != ''">
+			and name = #{name}
+		</if>
+		<if test="gender != null and gender != ''">
+			and gender = #{gender}
+		</if>
+	</select>
+
+	<!-- 查询用户列表实例2，if在where标签内 -->
+	<select id="getList2">
+		select * from g_ac_user
+		<where>
+			<if test="name != null and name != ''">
+				and name = #{name}
+			</if>
+			<if test="gender != null and gender != ''">
+				and gender = #{gender}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询用户列表实例3，choose -->
+	<select id="getList3WithStatus">
+		select * from g_ac_user
+		<where>
+			<choose>
+				<when test="status != null and status != ''">
+					and status = #{status}
+				</when>
+				<otherwise>
+					and status != -1
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
+	<!-- 根据id数组查询列表，传入数据名称为ids，数据类型为整形数组 -->
+	<select id="getList3WithStatus">
+		select * from g_ac_user
+		where id in
+		<foreach collection="ids" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<!-- 批量插入 -->
+	<insert id="insertUserBatch">
+		INSERT INTO `mybatis-demo`.`g_ac_user`(`email`, `password`, `name`) VALUES 
+		<foreach collection ="userList" item="item" index= "index" separator =",">
+			(#{item.email}, #{item.password}, #{item.name});
+		</foreach>
+	</insert>
+	
+	
+	<sql id="whereCondition">
+		<if test="name != null and name != ''">
+			and name = #{name}
+		</if>
+		<if test="gender != null and gender != ''">
+			and gender = #{gender}
+		</if>
+	</sql>
+	<!-- 查询用户列表实例2，if在where标签内 -->
+	<select id="getList2">
+		select * from g_ac_user
+		<where>
+			<include refid="whereCondition"></include>
+		</where>
 	</select>
 </mapper>
