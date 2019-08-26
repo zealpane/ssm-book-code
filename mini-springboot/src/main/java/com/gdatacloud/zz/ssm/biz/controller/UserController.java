@@ -18,8 +18,6 @@ public class UserController {
 	
 	@RequestMapping(value="/helloMvc")
 	public void helloMvc(HttpServletResponse response, String name) {
-//		String helloStr = userService.getHello(name);
-
 		try {
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html; charset=utf-8");
@@ -28,7 +26,5 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-//		return null;
 	}
 }

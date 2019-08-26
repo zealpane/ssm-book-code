@@ -52,5 +52,6 @@
     
   <module>xml-java-demo</module>
     <!-- <module>elasticsearch-demo</module> -->
-  </modules>
+    <module>springmvc-boot</module>
+	</modules>
 </project>

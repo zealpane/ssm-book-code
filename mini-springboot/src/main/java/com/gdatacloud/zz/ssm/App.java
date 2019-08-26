@@ -14,7 +14,7 @@ import org.apache.catalina.startup.Tomcat;
  */
 public class App {
 
-    public static int TOMCAT_PORT = 8080;
+    public static int TOMCAT_PORT = 8089;
     public static String TOMCAT_HOSTNAME = "127.0.0.1";
     public static String WEBAPP_PATH = "src/main";
     public static String WEBINF_CLASSES = "/WEB-INF/classes";
