@@ -1,3 +1,4 @@
+package com.demo;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{

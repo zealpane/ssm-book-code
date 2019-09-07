@@ -53,5 +53,6 @@
   <module>xml-java-demo</module>
     <!-- <module>elasticsearch-demo</module> -->
     <module>springmvc-boot</module>
-	</modules>
+    <module>springboot-starter-first</module>
+  </modules>
 </project>

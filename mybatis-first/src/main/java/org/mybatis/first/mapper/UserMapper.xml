@@ -4,36 +4,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.mybatis.first.mapper.UserMapper">
 
+	<resultMap type="org.mybatis.first.entity.User" id="userResult">
+		<result property="id" column="id" />
+		<result property="username" column="username" />
+		<result property="email" column="email" />
+		<result property="password" column="password" />
+	</resultMap>
+	<resultMap type="org.mybatis.first.entity.User" id="userResult2">
+		<result property="id" column="id" />
+		<result property="username" column="username" />
+		<result property="email" column="email" />
+		<result property="password" column="password" />
+	</resultMap>
+
+	<select id="selectResultMapTest" resultMap="userResult"></select>
+
 	<!-- 插入 -->
 	<insert id="insertUser">
-		INSERT INTO `mybatis-demo`.`g_ac_user` ( `id`, `email`, `password`, `name` )
+		INSERT INTO `mybatis-demo`.`g_ac_user` ( `id`,
+		`email`, `password`, `name` )
 		VALUES
-		( 1, 'zealpane@163.com', '123', '作者' );
+		( 1, 'zealpane@163.com', '123',
+		'作者' );
 	</insert>
 
-	<insert id="insertUser2" parameterType="org.mybatis.first.entity.User">
-		INSERT INTO `mybatis-demo`.`g_ac_user` (`email`, `password`, `name` )
+	<insert id="insertUser2"
+		parameterType="org.mybatis.first.entity.User">
+		INSERT INTO `mybatis-demo`.`g_ac_user` (`email`,
+		`password`, `name` )
 		VALUES
 		( #{email}, #{password}, #{name} );
 	</insert>
-	
+
 	<insert id="insertUserWithParam">
-		INSERT INTO `mybatis-demo`.`g_ac_user` (`email`, `password`, `name` )
+		INSERT INTO `mybatis-demo`.`g_ac_user` (`email`,
+		`password`, `name` )
 		VALUES
-		( #{user.email}, #{user.password}, #{user.name} );
+		( #{user.email}, #{user.password},
+		#{user.name} );
 	</insert>
-	
+
 	<delete id="deleteUserById">
-	    DELETE FROM g_ac_user WHERE id=#{id}
-	 </delete>
-	 
+		DELETE FROM g_ac_user WHERE id=#{id}
+	</delete>
+
 	<update id="updateUserById">
-	   UPDATE `mybatis-demo`.`g_ac_user` 
+		UPDATE `mybatis-demo`.`g_ac_user`
 		SET `email` = 'zealpane@163.com',
 		`password` = '123',
-		`name` = '作者' 
+		`name` = '作者'
 		WHERE
-			`id` = 1;
+		`id` = 1;
 	</update>
 
 	<select id="selectUserById"
@@ -50,6 +71,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="gender != null and gender != ''">
 			and gender = #{gender}
 		</if>
+	</select>
+	<select id="tipsTest">
+		select * from g_ac_user where 1=1
+		<include refid="whereCondition"></include>
 	</select>
 
 	<!-- 查询用户列表实例2，if在where标签内 -->
@@ -89,17 +114,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{item}
 		</foreach>
 	</select>
-	
+
 	<!-- 批量插入 -->
 	<insert id="insertUserBatch">
-		INSERT INTO `mybatis-demo`.`g_ac_user`(`email`, `password`, `name`) VALUES 
-		<foreach collection ="userList" item="item" index= "index" separator =",">
+		INSERT INTO `mybatis-demo`.`g_ac_user`(`email`, `password`, `name`)
+		VALUES
+		<foreach collection="userList" item="item" index="index"
+			separator=",">
 			(#{item.email}, #{item.password}, #{item.name});
 		</foreach>
 	</insert>
-	
-	
+
+
 	<sql id="whereCondition">
+		<if test="name != null and name != ''">
+			and name = #{name}
+		</if>
+		<if test="gender != null and gender != ''">
+			and gender = #{gender}
+		</if>
+	</sql>
+	<sql id="whereCondition2">
 		<if test="name != null and name != ''">
 			and name = #{name}
 		</if>
