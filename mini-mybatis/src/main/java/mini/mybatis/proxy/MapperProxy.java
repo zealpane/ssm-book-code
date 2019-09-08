@@ -6,16 +6,13 @@ import java.util.Collection;
 import mini.mybatis.sqlSession.SqlSession;
 
 /**
- * @author hongtaolong
- * mapper接口的动态代理类
+ * Mapper接口的代理类
  */
 public class MapperProxy<T> implements InvocationHandler{
 
 	private SqlSession sqlSession;
 	
 	private final Class<T> mapperInterface;
-	
-	
 	
 	public MapperProxy(SqlSession sqlSession, Class<T> mapperInterface) {
 		super();
@@ -27,15 +24,13 @@ public class MapperProxy<T> implements InvocationHandler{
 		return Collection.class.isAssignableFrom(type);
 	}
 	
-	//动态代理类最终调用的方法
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		Object result = null;
-		//object本身的方法，不进行增强
+		//Object类的方法，不处理
 		if (Object.class.equals(method.getDeclaringClass())) {
 			return method.invoke(this, args);
 		}
-		//获取接口的返回值，然后选择是调用selectone还是selectList
 		Class<?> returnType = method.getReturnType();
 		if (isCollection(returnType)) {
 			result = sqlSession.selectList(mapperInterface.getName()+"."+method.getName(), args);

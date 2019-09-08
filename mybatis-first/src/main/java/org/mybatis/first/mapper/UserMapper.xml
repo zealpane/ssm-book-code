@@ -4,12 +4,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.mybatis.first.mapper.UserMapper">
 
-	<resultMap type="org.mybatis.first.entity.User" id="userResult">
-		<result property="id" column="id" />
-		<result property="username" column="username" />
-		<result property="email" column="email" />
-		<result property="password" column="password" />
-	</resultMap>
 	<resultMap type="org.mybatis.first.entity.User" id="userResult2">
 		<result property="id" column="id" />
 		<result property="username" column="username" />
@@ -17,7 +11,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="password" column="password" />
 	</resultMap>
 
-	<select id="selectResultMapTest" resultMap="userResult"></select>
+	<resultMap type="org.mybatis.first.entity.User" id="userResult">
+		<result property="id" column="id" />
+		<result property="username" column="username" />
+		<result property="email" column="email" />
+		<result property="password" column="password" />
+	</resultMap>
+	<select id="selectResultMapTest" resultMap="userResult">
+		select * from g_ac_user where id = #{id}
+	</select>
 
 	<!-- 插入 -->
 	<insert id="insertUser">

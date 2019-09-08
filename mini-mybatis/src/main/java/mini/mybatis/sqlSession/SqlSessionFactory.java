@@ -16,16 +16,15 @@ import lombok.extern.slf4j.Slf4j;
 import mini.mybatis.config.Configuration;
 import mini.mybatis.config.MappedStatement;
 
-@Slf4j
 public class SqlSessionFactory {
 
     public final Configuration conf = new Configuration();
 
-    public SqlSessionFactory() {
+    public SqlSessionFactory(String xmlPackageName) {
         // 加载数据库配置信息
         loadDbInfo();
         // 加载mappers
-        loadMappersInfo();
+        loadMappersInfo(xmlPackageName);
     }
 
     /**
@@ -47,12 +46,12 @@ public class SqlSessionFactory {
 		conf.setPassword(properties.getProperty("jdbc.password"));
 	}
 	
-	private void loadMappersInfo() {
-		URL resources = null;
+	private void loadMappersInfo(String xmlPackageName) {
 		//获取存放mapper文件的路径
-		resources = SqlSessionFactory.class.getClassLoader()
-				.getResource("mapper");
-		File mappers = new File(resources.getFile());
+		String path = xmlPackageName.replaceAll("\\.", "/");
+		URL url = this.getClass().getClassLoader().getResource(path);
+		
+		File mappers = new File(url.getFile());
 		if (mappers.isDirectory()) {
 			File[] listFiles = mappers.listFiles();
 			if (listFiles == null || listFiles.length == 0)return;
@@ -88,16 +87,6 @@ public class SqlSessionFactory {
 			mappedStatement.setSql(sql);
 			conf.getMappedStatements().put(sourceId, mappedStatement);
 		}
-	}
-	
-	
-	/**
-	 * 单元测试
-	 */
-	public void sqlSessionFactoryTest() {
-		SqlSessionFactory sessionFactory = new SqlSessionFactory();
-		Configuration conf = sessionFactory.conf;
-		System.out.println(conf);
 	}
 	
 	public SqlSession openSession() {
